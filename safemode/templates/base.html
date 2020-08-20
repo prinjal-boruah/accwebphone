@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>BNA TCL Telecast</title>
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/bnatcl.png' %}" alt="" style="width: 25px;height: 25px;border-radius: 50%" align="left"/>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    </head>
+    <body onload=display_ct();>
+
+        <div class="wrapper">
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <a href="{% url 'ipcam' %}"><img id="main_logo" src="{% static 'img/bnatcl.png' %}"></a>
+                    <h3>{{ user.username }}</h3>
+                    <strong>BNA</strong>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <!-- <li class="active"> -->
+                    <li>
+                        <a href="{% url 'ipcam' %}">
+                            <i class="glyphicon glyphicon-camera"></i>
+                            IP Cam
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'webphone' %}">
+                            <i class="glyphicon glyphicon-phone-alt"></i>
+                            Webphone Users
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'mediamaster' %}">
+                            <i class="glyphicon glyphicon-facetime-video"></i>
+                            Media Master
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div id="content">
+
+                <nav class="navbar navbar-default">
+                    <div class="top-navbar-container">
+
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn margin-1vh-lr">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                            </button>
+                            <span id="bnatcl_header"><b>BNA Admin</b></span>                           
+                        </div>
+                        
+                        
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            
+                            <ul class="nav navbar-nav navbar-right" id="nav-header-right">
+                                <span id="clock" class="margin-1vh-lr"></span>
+                                <li><a href="{% url 'ipcam' %}">Home</a></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                {% block content %}
+                {% endblock content %}
+                
+
+            </div>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/base_javascript.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+
+    </body>
+</html>

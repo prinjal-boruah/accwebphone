@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<html>
+ <head>
+     <title>BNATCL</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <script src="{% static 'js/websocketbridge.js' %}" type="text/javascript"></script>
+     <script src="{% static 'js/jquery-2.1.1.js' %}" type="text/javascript"></script>
+ 
+
+ </head>
+
+
+<body onload="getStatus()" style="margin:0px;">
+
+	<input type="hidden" name="cnt_type" id="cnt_type" value="{{ latest_media.media_type }}">
+	<input type="hidden" name="cnt_url"  id="cnt_url"  value="{{ latest_media.url }}">
+	<input type="hidden" name="cnt_id"   id="cnt_id"   value="{{ latest_media.id }}">
+	
+	<div style="background-color:lightblue; width:480px; height:320px; text-align: center; padding:0px; overflow:hidden;" id="med-content"  >
+   		 Welcome To BNATCL
+	</div>
+  
+
+</body>
+
+<script src="{% static 'js/notifyAlert.js' %}"></script>
+
+</html>

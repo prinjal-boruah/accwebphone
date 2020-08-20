@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="djangoMsgContainer">
+    {% if messages %}
+        <div class="djangoMsg message">
+            {% for message in messages %}
+                <span class="{{ message.tags }}">{{ message }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+    
+    <a type="button" href="{% url 'post_new_mediamaster' %}"><button class="addbutton"><b class="plus">+</b>&nbsp;&nbsp;Add New Media Data</button></a>
+	<table id="mediaMasterTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Media ID</th>
+                <th>Media Type</th>
+                <th>Media URL</th>
+                <th>Is Active</th>
+                <th>Created Date</th>
+                <th class="content_td">Select Extn. ID</th>
+                <th>Broadcast</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        	{% for mediaMaster in madiaMasters %}
+            <tr>
+                <td>{{ mediaMaster.mediaid   }}</td>
+                <td>{{ mediaMaster.mediatype }}</td>
+                <td>{{ mediaMaster.mediaurl  }}</td>
+                <td>{{ mediaMaster.isactive  }}</td>
+                <td>{{ mediaMaster.createddate  }}</td>
+                <form method="POST" action="{% url 'broadcast_media' pk=mediaMaster.mediaid %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="mediatype" value="{{ mediaMaster.mediatype }}">
+                    <input type="hidden" name="mediaurl" value="{{ mediaMaster.mediaurl }}">
+                    <td align="center" class="content_td">
+                        <select name="user_id">                        
+                            <option value="">Select</option>
+                            {% for webphone_user_name in webphone_user_names %}
+                            <option value="{{ webphone_user_name.wp_user_name }}">{{ webphone_user_name.wp_user_name }}</option>
+                            {% endfor %}
+                        </select>
+                    
+                    </td>
+                    <td align="center">
+                        <button class="Broadcast_button" type="submit" onclick="return confirm('Are you sure you want to Broadcast this Media ?');">Broadcast</button>
+                    </td>
+                </form>
+                <td align="center">
+                    <a href="{% url 'mediamaster_edit' pk=mediaMaster.mediaid %}"><span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+                <td align="center">
+                    <a href="{% url 'mediamaster_delete' pk=mediaMaster.mediaid %}" onclick="return confirm('Are you sure you want to delete this Media Data');"><span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+	
+{% endblock content %}

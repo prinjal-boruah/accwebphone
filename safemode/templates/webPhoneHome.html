@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="djangoMsgContainer">
+    {% if messages %}
+        <div class="djangoMsg message">
+            {% for message in messages %}
+                <span class="{{ message.tags }}">{{ message }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+	<a type="button" href="{% url 'post_new_webphone' %}"><button class="addbutton"><b class="plus">+</b>&nbsp;&nbsp;Add New Web Phone</button></a>
+	<table id="webPhoneTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Cam ID</th>
+                <th>WP Server Name</th>
+                <th>WP User Name</th>
+                <th>WP User Password</th>
+                <th>WP User Status</th>
+                <th>WP User Created</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        	{% for webPhone in webPhones %}
+            <tr>
+                <td>{{ webPhone.cam_id }}</td>
+                <td>{{ webPhone.wp_server_name }}</td>
+                <td>{{ webPhone.wp_user_name }}</td>
+                <td>{{ webPhone.wp_user_password }}</td>
+                <td>{{ webPhone.wp_user_status }}</td>
+                <td>{{ webPhone.wp_user_created }}</td>
+                <td align="center"><a href="{% url 'webphone_edit' pk=webPhone.wpid %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td align="center"><a href="{% url 'webphone_delete' pk=webPhone.wpid %}" onclick="return confirm('Are you sure you want to delete this web phone?');"><span class="glyphicon glyphicon-trash"></span></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

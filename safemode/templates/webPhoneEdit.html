@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+		<div class="formDiv">
+			<form method="POST" action="" enctype="multipart/form-data" class="updateForm">
+
+				<h3 class="formHeader">Web Phone </h3>
+		        {% csrf_token %}
+		        <label>Cam ID </label>
+		        {{ webphone_form.cam_id }}<br><hr>
+		        <label>WP Server Name </label>
+		        {{ webphone_form.wp_server_name }}<br><hr>
+		        <label>WP User Name </label>
+		        {{ webphone_form.wp_user_name }}<br><hr>
+		        <label>WP User Password </label>
+		        {{ webphone_form.wp_user_password }}<br><hr>
+		        <label>WP User Status </label>
+		        {{ webphone_form.wp_user_status }}<br><hr>
+		        <label>WP User Created </label>
+		        {{ webphone_form.wp_user_created }}<br><hr>
+		        <a type="button" href="{% url 'webphone' %}" class="bttn-cancel">Cancel</a>
+		        <button type="submit" class="btn-save">Save</button>		        
+    		</form>
+		</div>
+{% endblock content %}

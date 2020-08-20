@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BNATCL Login</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/login_style.css' %}">
+	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="loginFormContainer">
+		<div class="welcomeMsg">
+			<div id="msgText">
+				<h1>Welcome Back!</h1>
+				<h5>Welcome to BNATCL, 
+				please login <br>with your
+				username & password.</h5>
+			</div>
+		</div>
+		
+		<div class="loginBox">
+			<form class="loginForm" method="POST" action="" enctype="multipart/form-data" class="updateForm">
+				<h1 id="loginFormHeader">Sign in to BNATCL</h1>
+				{% csrf_token %}
+				<label>Username</label><br>
+				{{ form.username }}<br>
+				<label>Password</label><br>
+				{{ form.password }}<br>
+				<button type="submit" id="loginBtn">Login</button>
+				<div class="djangoMsgContainer">
+				{% if messages %}
+					<div class="djangoMsg message">
+				    	{% for message in messages %}
+				      		<span class="{{ message.tags }}">{{ message }}</span>
+				    	{% endfor %}
+					</div>
+				{% endif %}
+				</div>
+			</form>
+
+		</div>
+
+	</div>
+
+<script type="text/javascript" src="{% static 'js/login_javascript.js' %}"></script>
+</body>
+</html>

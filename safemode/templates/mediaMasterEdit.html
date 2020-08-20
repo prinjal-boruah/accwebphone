@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="formDiv">
+		<form method="POST" action="" enctype="multipart/form-data" class="updateForm">
+
+			<h3 class="formHeader">Add Media Master </h3>
+	        {% csrf_token %}
+	        <label>Media Type </label>
+	        {{ mm_form.mediatype }}<br><hr>
+	        <label>Media URL </label>
+	        {{ mm_form.mediaurl }}<br><hr>
+	        <label>Is Active </label>
+	        {{ mm_form.isactive }}<br><hr>
+	        <label>Create Date </label>
+	        {{ mm_form.createddate }}<br><hr>		        
+	        <a type="button" href="{% url 'mediamaster' %}" class="bttn-cancel">Cancel</a>
+	        <button type="submit" class="btn-save">Save</button>
+		</form>
+	</div>
+{% endblock content %}

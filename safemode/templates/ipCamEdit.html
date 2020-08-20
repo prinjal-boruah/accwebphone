@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="formDiv">
+		<form method="POST" action="" enctype="multipart/form-data" class="updateForm">
+
+			<h3 class="formHeader">IP Cam </h3>
+	        {% csrf_token %}
+	        <label>Cam Ip </label>
+	        {{ ip_form.cam_ip }}<br><hr>
+	        <label>Cam User </label>
+	        {{ ip_form.cam_user }}<br><hr>
+	        <label>Cam Password </label>
+	        {{ ip_form.cam_pass }}<br><hr>
+	        <label>Cam Extension </label>
+	        {{ ip_form.extension }}<br><hr>		        
+	        <a type="button" href="{% url 'ipcam' %}" class="bttn-cancel">Cancel</a>
+	        <button type="submit" class="btn-save">Save</button>
+		</form>
+	</div>
+{% endblock content %}

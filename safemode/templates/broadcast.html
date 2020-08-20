@@ -1,0 +1,302 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Bootstrap Example</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+   </head>
+   <body>
+      <nav class="navbar navbar-inverse">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>                        
+               </button>
+               <table>
+                  <tr>
+                     <td><a class="navbar-brand" href="#"><img src="/static/img/bnatcl.png" height="25px" width="25px;"></a>  </td>
+                     <td valign="middle"><font color="white">BNA TECHNOLOGY CONSULTING LTD</font><br/><font color="blue">Value through Innovation</font></td>
+                  </tr>
+               </table>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+               <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      
+      <div class="container-fluid text-center">
+         <div class="row content">
+            <div class="col-sm-12 text-left">
+               <div class="container">
+                  <h2>Manage Media Content</h2>
+                  <hr/>
+                  <ul class="nav nav-tabs">
+                     <li class="active"><a data-toggle="tab" href="#home">Text</a></li>
+                     <li><a data-toggle="tab" href="#menu1">Image</a></li>
+                     <li><a data-toggle="tab" href="#menu2">Video</a></li>
+                     <li><a data-toggle="tab" href="#menu3">Animation</a></li>
+                  </ul>
+                  <div class="tab-content">
+                     <div id="home" class="tab-pane fade in active">
+                        <h3>TEXT</h3>
+                        <p align="right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add New Text</button> </p>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                           <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add New Text</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                 </div>
+                                 <form action="/textcontent/" method="POST">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                       <div class="form-group">
+                                          <input type="hidden" class="form-control" id="mediatype" name="mediatype" value="text" aria-describedby="txtHelp" placeholder="Enter title" required>
+                                          <label>Enter Text</label>
+                                          <input type="text" class="form-control" id="mediaurl" name="mediaurl" aria-describedby="txtHelp" placeholder="Enter Text" required>
+                                          <small id="txt_help" class="form-text text-muted">This content can be broadcasted . </small>
+                                       </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <button type="submit" class="btn btn-primary" >Save</button>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="panel panel-default">
+                           <!-- Default panel contents -->
+                           <div class="panel-heading">Text Content</div>
+                           <!-- Table -->           
+                           <table id="example" class="table table-striped table-bordered" >
+                              <thead>
+                                 <tr>
+                                    <th>Name</th>
+                                    <th>Content</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {% for mediacontent_text in display_loc_text reversed %}
+                                 <tr>
+                                    <td>{{ mediacontent_text.mediatype }}</td>
+                                    <td>{{ mediacontent_text.mediaurl }}</td>
+                                    {% if mediacontent_text.isactive == 1 %}
+                                    <td><button type="submit" class="btn btn-success" >active</button></td>
+                                    {% else %}
+                                    <td><button type="submit" class="btn btn-danger" >inactive</button></td>
+                                    {% endif %}
+                                    <td><button type="submit" class="btn btn-primary" >Broadcast</button></td>
+                                 </tr>
+                                 {% endfor %} 
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                     <div id="menu1" class="tab-pane fade">
+                        <h3>IMAGE</h3>
+                        <p align="right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1">Add New Image</button> </p>
+                        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                           <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add New Content</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div>
+                                        <form method="post" enctype="multipart/form-data" id="formContent">
+                                           {% csrf_token %}
+                                            <span>Image Name11 : </span> <br>
+                                            {{ form1.title }}<br>
+                                            bbbb
+                                            <span>Choose Image : </span> <br>
+                                            {{ form1.cover }}<br>
+                                           <button type="submit" id="submit_image">Upload</button>
+                                        </form>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="panel panel-default">
+                           <!-- Default panel contents -->
+                           <div class="panel-heading">Text Content</div>
+                           <!-- Table -->           
+                           <table id="example" class="table table-striped table-bordered" style="width:100%">
+                              <thead>
+                                 <tr>
+                                    <th>Name</th>
+                                    <th>Content</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {% for mediacontent_image in display_loc_image %}
+                                 <tr>
+                                    <td>{{ mediacontent_image.mediatype }}</td>
+                                    <td>{{ mediacontent_image.mediaurl }}</td>
+                                    {% if mediacontent_image.isactive == 1 %}
+                                    <td><button type="submit" class="btn btn-success" >active</button></td>
+                                    {% else %}
+                                    <td><button type="submit" class="btn btn-danger" >inactive</button></td>
+                                    {% endif %}
+                                    <td><button type="submit" class="btn btn-primary" >Broadcast</button></td>
+                                 </tr>
+                                 {% endfor %} 
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                     <div id="menu2" class="tab-pane fade">
+                        <h3>VIDEO</h3>
+                        <p align="right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">Add New Video</button> </p>
+                        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                           <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add New Content</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                 </div>
+                                 <form action="/textcontent/" method="POST">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                       <div class="form-group">
+                                          <label>Enter Title</label>
+                                          <input type="text" class="form-control" id="mediatype" name="mediatype" aria-describedby="txtHelp" placeholder="Enter title" required>
+                                          <label>Enter Content</label>
+                                          <input type="text" class="form-control" id="mediaurl" name="mediaurl" aria-describedby="txtHelp" placeholder="Enter content" required>
+                                          <small id="txt_help" class="form-text text-muted">This content can be broadcasted . </small>
+                                       </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <button type="submit" class="btn btn-primary" >Save</button>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="panel panel-default">
+                           <!-- Default panel contents -->
+                           <div class="panel-heading">Text Content</div>
+                           <!-- Table -->           
+                           <table id="example" class="table table-striped table-bordered" style="width:100%">
+                              <thead>
+                                 <tr>
+                                    <th>Name</th>
+                                    <th>Content</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {% for mediacontent_video in display_loc_video %}
+                                 <tr>
+                                    <td>{{ mediacontent_video.mediatype }}</td>
+                                    <td>{{ mediacontent_video.mediaurl }}</td>
+                                    {% if mediacontent_video.isactive == 1 %}
+                                    <td><button type="submit" class="btn btn-success" >active</button></td>
+                                    {% else %}
+                                    <td><button type="submit" class="btn btn-danger" >inactive</button></td>
+                                    {% endif %}
+                                    <td><button type="submit" class="btn btn-primary" >Broadcast</button></td>
+                                 </tr>
+                                 {% endfor %} 
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                     <div id="menu3" class="tab-pane fade">
+                        <h3>ANIMATION</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p align="right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal3">Add New Animation</button> </p>
+                        <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                           <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add New Content</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                 </div>
+                                 <form action="/textcontent/" method="POST">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                       <div class="form-group">
+                                          <label>Enter Title</label>
+                                          <input type="text" class="form-control" id="mediatype" name="mediatype" aria-describedby="txtHelp" placeholder="Enter title" required>
+                                          <label>Enter Content</label>
+                                          <input type="text" class="form-control" id="mediaurl" name="mediaurl" aria-describedby="txtHelp" placeholder="Enter content" required>
+                                          <small id="txt_help" class="form-text text-muted">This content can be broadcasted . </small>
+                                       </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <button type="submit" class="btn btn-primary" >Save</button>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="panel panel-default">
+                           <!-- Default panel contents -->
+                           <div class="panel-heading">Text Content</div>
+                           <!-- Table -->           
+                           <table id="example" class="table table-striped table-bordered" style="width:100%">
+                              <thead>
+                                 <tr>
+                                    <th>Name</th>
+                                    <th>Content</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {% for mediacontent_video in display_loc_video %}
+                                 <tr>
+                                    <td>{{ mediacontent_video.mediatype }}</td>
+                                    <td>{{ mediacontent_video.mediaurl }}</td>
+                                    {% if mediacontent_video.isactive == 1 %}
+                                    <td><button type="submit" class="btn btn-success" >active</button></td>
+                                    {% else %}
+                                    <td><button type="submit" class="btn btn-danger" >inactive</button></td>
+                                    {% endif %}
+                                    <td><button type="submit" class="btn btn-primary" >Broadcast</button></td>
+                                 </tr>
+                                 {% endfor %} 
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+   <script type="text/javascript" src="{% static 'js/javascript.js' %}"></script>
+</html>
